@@ -25,7 +25,10 @@ Font font;
 Text text;
 int p1Score = 0;
 int p2Score = 0;
-
+Color darkblue(73, 109, 140);
+Color lightgrey(199, 207, 217);
+Color darkgrey(134, 154, 166);
+Color lightblue(101, 136, 166);	
 CircleShape ball;
 RectangleShape paddles[2];
 
@@ -41,10 +44,12 @@ void Reset() {
 	for (auto& p : paddles) {
 		p.setSize(paddleSize - Vector2f(3, 3));
 		p.setOrigin(paddleSize / 2.f);
+		p.setFillColor(darkblue);
 	}
 	// Set size and origin of ball
 	ball.setRadius(ballRadius - 3);
 	ball.setOrigin(ballRadius / 2, ballRadius / 2);
+	ball.setFillColor(lightblue);
 	//reset paddle position
 	paddles[0].setPosition(10 + paddleSize.x / 2, gameHeight / 2);
 	paddles[1].setPosition(gameWidth - 10 - paddleSize.x / 2, gameHeight / 2);
@@ -62,6 +67,8 @@ void Load() {
 	text.setFont(font);
 	// set the character size to 24 pixels
 	text.setCharacterSize(100);
+
+	text.setColor(darkgrey);
 	
 	Reset();
 
@@ -217,7 +224,7 @@ int main() {
 	RenderWindow window(VideoMode(gameWidth, gameHeight), "PONG");
 	Load();
 	while (window.isOpen()) {
-		window.clear();
+		window.clear(lightgrey);
 		Update(window);
 		Render(window);
 		window.display();
