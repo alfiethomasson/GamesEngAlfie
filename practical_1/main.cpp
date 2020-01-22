@@ -23,6 +23,7 @@ const int gameHeight = 600;
 const float paddleSpeed = 400.f;
 bool AIActive = true;
 bool gameActive = false;
+bool scoreActive = false;
 Font font;
 Text text;
 Text score;
@@ -34,19 +35,20 @@ Color darkgrey(134, 154, 166);
 Color lightblue(101, 136, 166);	
 CircleShape ball;
 RectangleShape paddles[2];
+//Clock clock;
 
 const float paddleDist = 10.f + paddleSize.x;
 
 void Reset() {
 
 	gameActive = false;
-
+		
 	// Update Score Text
 	text.setString(std::to_string(p1Score) + " : " + std::to_string(p2Score));
 	// Keep Score Text Centered
 	text.setPosition((gameWidth * .5f) - (text.getLocalBounds().width * .5f), 0);
 
-	score.setPosition((gameWidth * .5f) - (text.getLocalBounds().width * .5f), 0);
+	score.setPosition((gameWidth * .5f) - (score.getLocalBounds().width * .5f), 100);
 
 	// Set Size and origin of paddles
 	for (auto& p : paddles) {
@@ -83,7 +85,7 @@ void Load() {
 
 	text.setColor(darkgrey);
 	score.setColor(darkgrey);
-	score.set
+	//score.set
 	score.setString("SCORE!");
 	score.setPosition(gameWidth / 2, gameHeight / 2);
 	
@@ -101,6 +103,7 @@ void Update(RenderWindow &window) {
 			Keyboard::isKeyPressed(controls[3]))
 		{
 			gameActive = true;
+			scoreActive = false;
 		}
 	}
 	else if (gameActive == true)
@@ -206,11 +209,13 @@ void Update(RenderWindow &window) {
 		}
 		else if (bx > gameWidth) {
 			//right wall
+			scoreActive = true;
 			p1Score++;
 			Reset();
 		}
 		else if (bx < 0) {
 			//left wall
+			scoreActive = true;
 			p2Score++;
 			Reset();
 		}
@@ -252,7 +257,10 @@ void Render(RenderWindow& window) {
 	window.draw(paddles[1]);
 	window.draw(ball);
 	window.draw(text);
-	window.draw(score);
+	if (scoreActive == true)
+	{
+		window.draw(score);
+	}
 }
 
 int main() {
