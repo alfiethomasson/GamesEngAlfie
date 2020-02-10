@@ -27,3 +27,9 @@ file(GLOB_RECURSE SOURCES 2_invaders/*.cpp 2_invaders/*.h)
 add_executable(2_INVADERS ${SOURCES} )
 target_include_directories(2_INVADERS SYSTEM PRIVATE ${SFML_INCS})
 target_link_libraries(2_INVADERS sfml-graphics)
+
+##Tile maps
+file(GLOB_RECURSE SOURCES 3_tiles/*.cpp 3_tiles/*.h)
+add_executable(3_TILES ${SOURCES} )
+target_include_directories(3_TILES SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(3_TILES sfml-graphics)
