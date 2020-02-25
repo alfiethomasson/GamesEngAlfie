@@ -9,8 +9,6 @@ public:
 	static void Fire(const sf::Vector2f& pos, const bool mode);
 	//Bullet(const sf::Vector2f& pos, const bool mode);
 	~Bullet() = default;
-	//Constructor that takes a sprite
-	explicit Bullet(sf::IntRect ir);
 protected:
 	static unsigned char bulletPointer;
 	static Bullet bullets[256];

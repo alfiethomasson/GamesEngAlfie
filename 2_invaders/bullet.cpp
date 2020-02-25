@@ -1,5 +1,5 @@
 #include "bullet.h"
-#include "game.h"
+#include "Game.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -16,23 +16,17 @@ Bullet Bullet::bullets[256];
 Bullet::Bullet() {};
 
 void Bullet::Render(sf::RenderWindow& window) {
-	for (const auto& bullet : bullets) {
-		//std::cout << "rendering";
+	for (Bullet &bullet : bullets) {
 		window.draw(bullet);
 	}
 }
-
-Bullet::Bullet(IntRect ir) : sf::Sprite() {
-	_sprite = ir;
-	setTexture(spritesheet);
-	setTextureRect(_sprite);
-};
 
 
  void Bullet::Start()
 {
 	for (auto& bullet : bullets)
 	{
+		bullet.setTexture(spritesheet);
 		bullet.setPosition(-9999.0f, -9999.0f);
 	}
 }
@@ -53,7 +47,7 @@ void Bullet::_Update(const float& dt) {
 		return;
 	}
 	else {
-		std::cout << "bullet at: " << getPosition().x << " " << getPosition().y << "  ";
+		//std::cout << "bullet at: " << getPosition().x << " " << getPosition().y << "  ";
 		move(0, dt * 200.0f * (_mode ? 1.0f : -1.0f));
 		const FloatRect boundingBox = getGlobalBounds();
 
@@ -82,8 +76,18 @@ void Bullet::Fire(const sf::Vector2f& pos, const bool mode)
 {
 //	std::cout << "Bullet fired";
 	//std::cout << " bullet pointer is currently  " << bulletPointer;
+
 	bullets[bulletPointer].setPosition(pos);
 	bullets[bulletPointer]._mode = mode;
+	if (mode == false)
+	{
+  	bullets[bulletPointer].setTextureRect(IntRect(32, 32, 32, 32));
+	}
+	else
+	{
+	bullets[bulletPointer].setTextureRect(IntRect(64, 32, 32, 32));
+	}
 //	std::cout << "bullet moved to: " << bullets[bulletPointer].getPosition().x << " , " << bullets[bulletPointer].getPosition().y << "  ";
+//	std::cout << "bullet pointer = " << bulletPointer;
 	bulletPointer++;
 }

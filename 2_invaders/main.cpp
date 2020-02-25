@@ -24,12 +24,12 @@ void Load() {
 		cerr << "Failed to load spritesheet!" << std::endl;
 	}
 
-	for (int r = 1; r < invaders_columns + 1; ++r) {
-		auto rect = IntRect(0, r, 32, 32);
-		for (int c = 1; c < invaders_rows+ 1; ++c) {
+	for (int r = 0; r < invaders_columns; r++) {
+		for (int c = 0; c < invaders_rows; c++) {
+			auto rect = IntRect(32 * c, 0, 32, 32);
 			//float x = 100 * c;
 		//	float y = 100 * r;
-		Vector2f position =  Vector2f(100 * r, 50 * c);
+		Vector2f position =  Vector2f(100 + (50 * r), 100 + (50 * c));
 		auto inv = new Invader(rect, position);
 		ships.push_back(inv);
 		}

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include "LevelSystem.h"
 //#include "Player.h"
 #include "Game.h"
 
@@ -14,6 +15,17 @@ Player p1;
 void Load()
 {
 	auto p1 = new Player();
+
+	ls::loadLevelFile("res/maze_2.txt");
+
+	// Print the level to the console
+	for (size_t y = 0; y < ls::getHeight(); ++y) {
+		for (size_t x = 0; x < ls::getWidth(); ++x) {
+			cout << ls::getTile({ x, y });
+		}
+		cout << endl;
+	}
+
 	//players.push_back(p1);
 }
 
@@ -47,6 +59,7 @@ void Update(RenderWindow& window)
 void Render(RenderWindow& window)
 {
 	p1.Render(window);
+	ls::Render(window);
 }
 
 int main() {

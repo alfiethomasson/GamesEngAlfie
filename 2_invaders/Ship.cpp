@@ -38,15 +38,33 @@ Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
 }
 
 	void Invader::Update(const float& dt) {
-		Ship::Update(dt);
+		if (!is_exploded)
+		{
+			Ship::Update(dt);
 
-		move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
+			move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
 
-		if ((direction && getPosition().x > gameWidth - 16) ||
-			(!direction && getPosition().x < 16)) {
-			direction = !direction;
-			for (int i = 0; i < ships.size() - 1; ++i) {
-				ships[i]->move(0, 24);
+			if ((direction && getPosition().x > gameWidth - 16) ||
+				(!direction && getPosition().x < 16)) {
+				direction = !direction;
+				for (int i = 0; i < ships.size() - 1; ++i) {
+					ships[i]->move(0, 24);
+				}
+			}
+
+			static float firetime = 0.0f;
+			firetime -= dt;
+			if (firetime <= 0 && rand() % 100 == 0) {
+				Bullet::Fire(getPosition(), true);
+				firetime = 4.0f + (rand() % 60);
+			}
+		}
+		else
+		{
+			float newalpha = explodetime -= dt;
+			if (getColor().a > 0)
+			{
+				setColor(Color(255, 255, 255, 255.0f * newalpha));
 			}
 		}
 	}
@@ -57,25 +75,39 @@ Player::Player() : Ship(IntRect(160, 32, 32, 32)) {
 }
 
 void Player::Update(const float &dt) {
-    Ship::Update(dt);
+	if (!is_exploded)
+	{
+		Ship::Update(dt);
 
-	//std::cout << "Player position currently: " << getPosition().x << " + " << getPosition().y << "  ";
+		//std::cout << "Player position currently: " << getPosition().x << " + " << getPosition().y << "  ";
 
-	//Bullet::Update(dt);
-	pdirection = 0.0;
+		//Bullet::Update(dt);
+		pdirection = 0.0;
 
-	if (Keyboard::isKeyPressed(controls[0])) {
-		pdirection--;
+		if (Keyboard::isKeyPressed(controls[0])) {
+			pdirection--;
+		}
+		if (Keyboard::isKeyPressed(controls[1])) {
+			pdirection++;
+		}
+		static float firetime = 0.0f;
+		firetime -= dt;
+		if (firetime <= 0 && Keyboard::isKeyPressed(controls[2])) {
+			Bullet::Fire(getPosition(), false);
+			firetime = 0.7f;
+		}
+
+		move(pdirection * playerSpeed * dt, 0);
+
 	}
-	if (Keyboard::isKeyPressed(controls[1])) {
-		pdirection++;
+	else
+	{
+		float newalpha = explodetime -= dt;
+		if (getColor().a > 0)
+		{
+			setColor(Color(255, 255, 255, 255.0f * newalpha));
+		}
 	}
-	if (Keyboard::isKeyPressed(controls[2])) {
-		Bullet::Fire(getPosition(), true);
-	}
-	
-	move(pdirection * playerSpeed * dt, 0);
-
 
     //Move left
 
@@ -84,5 +116,7 @@ void Player::Update(const float &dt) {
 
 void Ship::Explode() {
 	setTextureRect(IntRect(128, 32, 32, 32));
+	explodetime = 2.0f;
 	_exploded = true;
+	is_exploded = true;
 }	

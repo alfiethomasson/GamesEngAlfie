@@ -32,4 +32,15 @@ target_link_libraries(2_INVADERS sfml-graphics)
 file(GLOB_RECURSE SOURCES 3_tiles/*.cpp 3_tiles/*.h)
 add_executable(3_TILES ${SOURCES} )
 target_include_directories(3_TILES SYSTEM PRIVATE ${SFML_INCS})
-target_link_libraries(3_TILES sfml-graphics)
+target_link_libraries(3_TILES lib_tile_level_loader sfml-graphics)
+
+## Tile loader lib
+file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
+add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
+target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" )
+target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
+
+# Maths lib
+add_library(lib_maths INTERFACE)
+target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
+target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})

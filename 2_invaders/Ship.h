@@ -10,6 +10,7 @@ protected:
 	bool _exploded;
 public:
 	bool is_exploded;
+	float explodetime;
 	virtual void Explode();
 	//Constructor that takes a sprite
 	explicit Ship(sf::IntRect ir);
