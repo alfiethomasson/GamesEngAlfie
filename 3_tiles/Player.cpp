@@ -9,7 +9,7 @@ void Player::Update(double dt) {
 
 	float directionV = 0.0f;
 	if (Keyboard::isKeyPressed(controls[0])) {
-		std::cout << "Up pressed";
+	//	std::cout << "Up pressed";
 		directionV--;
 	}
 	if (Keyboard::isKeyPressed(controls[1])) {
@@ -18,7 +18,7 @@ void Player::Update(double dt) {
 
 	float directionH = 0.0f;
 	if (Keyboard::isKeyPressed(controls[2])) {
-		std::cout << "Up pressed";
+		//std::cout << "Up pressed";
 		directionH--;
 	}
 	if (Keyboard::isKeyPressed(controls[3])) {

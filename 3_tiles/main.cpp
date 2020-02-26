@@ -16,7 +16,7 @@ void Load()
 {
 	auto p1 = new Player();
 
-	ls::loadLevelFile("res/maze_2.txt");
+	ls::loadLevelFile("C:/Users/alfie/OneDrive/Documents/GitHub/GamesEngAlfie/res/maze_2.txt");
 
 	// Print the level to the console
 	for (size_t y = 0; y < ls::getHeight(); ++y) {

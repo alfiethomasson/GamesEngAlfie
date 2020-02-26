@@ -44,3 +44,9 @@ target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
 add_library(lib_maths INTERFACE)
 target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
 target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})
+
+## Pacman
+file(GLOB_RECURSE SOURCES Pacman/*.cpp Pacman/*.h)
+add_executable(PACMAN ${SOURCES} )
+target_include_directories(PACMAN SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(PACMAN sfml-graphics)
