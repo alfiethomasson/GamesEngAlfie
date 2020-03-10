@@ -11,6 +11,7 @@ constexpr uint16_t gameWidth = 800;
 constexpr uint16_t gameHeight = 600;
 
 extern vector<Entity*> entities;
+extern EntityManager em;
 
 const Keyboard::Key controls[4] = {
 
